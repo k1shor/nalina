@@ -70,6 +70,7 @@ export default async function handler(req, res) {
       const { _id } = user
 
       console.log(user, "USER")
+      console.log("process.env.JWT_SECRET")
       let token = jwt.sign({
         _id,
         email,

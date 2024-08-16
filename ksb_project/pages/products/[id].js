@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllProduct, getProductById } from '../api/productAPI';
-import { useParams } from 'next/navigation';
+import { redirect, useParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 
 
 // export async function getStaticPaths() {
@@ -31,7 +32,7 @@ const Products = () => {
   const id = params?.id;
   const [product, setProduct] = useState({});
   let { product_title, about, application, head, temperature, motor_rating, capacity, image } = product;
-
+  const router = useRouter()
   useEffect(() => {
 
     getProductById(id)
@@ -39,6 +40,9 @@ const Products = () => {
       .catch(err => console.log(err));
   }, [id]);
 
+  const onBtnClick = ()=>{
+    router.back()
+  }
 
   return (
     <div>
@@ -99,11 +103,14 @@ const Products = () => {
           <hr />
         </div>
         <div className='flex justify-between mt-4'>
-          <button type="button" className="text-gray-900 bg-white border border-black border-solid focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 font-bold">
+          {/* <button type="button" className="text-gray-900 bg-white border border-black border-solid focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 font-bold">
             &lt; Light
           </button>
           <button type="button" className="text-gray-900 bg-white border border-black border-solid focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 font-bold">
             Night &gt;
+          </button> */}
+          <button type="button" className="text-gray-900 bg-white border border-black border-solid focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700 font-bold " onClick={()=>onBtnClick()}>
+            &lt; Back
           </button>
         </div>
       </div>

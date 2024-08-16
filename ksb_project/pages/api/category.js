@@ -27,7 +27,7 @@ export default async function handler(req, res) {
                 }
                 res.send(category);
             } else {
-                let categories = await Category.find({parent_category: null}).populate('parent_category')
+                let categories = await Category.find({parent_category: null}).populate('parent_category','')
                 res.send(categories)
             }
 
