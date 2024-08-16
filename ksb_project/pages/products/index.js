@@ -68,8 +68,6 @@ const Index = (props) => {
         </div>
         <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row mt-14 justify-center items-center gap-3 px-4 flex-wrap">
           <button
-// <li className={`py-2 px-4 rounded-l-full text-base ${bgcolor === 'all' || bgcolor === ''  ? 'bg-[#5ce1e6] text-white':'hover:bg-[#5ce1e6] hover:text-white'}`} onClick={()=>handleFilter('all')}>All</li>
-
             className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg ==='all' || btnbg === '' ? 'bg-ksb text-white': 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
             onClick={() => handleClick("all")}
           >
