@@ -24,7 +24,7 @@ const Product = ({ product }) => {
         className="h-full mx-auto"
       />
       <Link
-        href={`/products/${product._id}`}
+        href={`/products/product/${product._id}`}
         className="w-full h-[40px] text-white bg-blue-900 flex justify-center items-center font-bold rounded-lg"
       >
         {product?.product_title}

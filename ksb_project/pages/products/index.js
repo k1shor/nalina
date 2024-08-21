@@ -18,7 +18,7 @@ const Index = (props) => {
   let [reset, setReset] = useState(false);
   let [btnbg, setBtnBg] = useState('')
 
-  
+
   useEffect(() => {
     setReset(false);
     setSubCategories("All")
@@ -37,12 +37,12 @@ const Index = (props) => {
   // };
 
   const handleClick = (id) => {
-    if(id === "all"){
+    if (id === "all") {
       setReset(true)
       setSubCategories("All")
       setBtnBg('all')
     }
-    else{
+    else {
       getSubCategories(id).then((data) => setSubCategories(data));
       setBtnBg(id)
     }
@@ -68,7 +68,7 @@ const Index = (props) => {
         </div>
         <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row mt-14 justify-center items-center gap-3 px-4 flex-wrap">
           <button
-            className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg ==='all' || btnbg === '' ? 'bg-ksb text-white': 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
+            className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg === 'all' || btnbg === '' ? 'bg-ksb text-white' : 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
             onClick={() => handleClick("all")}
           >
             ALL
@@ -76,7 +76,7 @@ const Index = (props) => {
           {categories.map((category) => (
             <button
               key={category._id}
-              className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg === category._id ? 'bg-ksb text-white': 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
+              className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg === category._id ? 'bg-ksb text-white' : 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
               onClick={() => handleClick(category._id)}
             >
               {category.category_name}
@@ -85,31 +85,31 @@ const Index = (props) => {
         </div>
         {
           subcategories === "All" ?
-          <>
-          <div className="w-full md:w-3/4 lg:w-11/12 m-auto flex flex-col md:flex-row md:gap-11 gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
-            {products.map((product) => {
-                return <>
-                  <div className="">
-                    <h1 className="text-sm my-3 md:text-lg font-semibold text-center bg-ksb  w-full mx-auto py-2 px-3 md:px-5 text-white rounded-lg ">{product.category.category_name}</h1>
+            <>
+              <div className="w-full md:w-3/4 lg:w-11/12 m-auto flex flex-col md:flex-row md:gap-11 gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
+                {products.map((product) => {
+                  return <>
+                    <h1 className="text-sm mt-3 md:text-md font-semibold text-center text-ksb  w-full mx-auto rounded-lg ">{product.category.category_name}</h1>
                     <Product key={product._id} product={product} FRONTEND_URL={props.FRONTEND_URL} />
-                  </div>
-                </>
+                  </>
+                })}
+              </div>
+            </>
+            :
+            <>
+              <div className="w-full md:w-3/4 lg:w-11/12 m-auto flex flex-col md:flex-row md:gap-11 gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
+              {subcategories.map((subcategory) => {
+                return (
+                  <>
+                    <Link href={`/products/${subcategory._id}`}><h1 className="text-sm mt-3 md:text-md font-semibold text-center text-ksb  w-full mx-auto rounded-lg ">
+                      {subcategory.category_name}
+                    </h1></Link>
+                    <ProductByCategory category={subcategory._id} />
+                  </>
+                );
               })}
               </div>
-          </>
-          :
-          <>
-          {subcategories.map((subcategory) => {
-            return (
-              <>
-                <h1 className="text-sm my-3 md:text-lg font-semibold text-center bg-ksb sm:w-1/4 w-3/4 mx-auto py-2 px-3 md:px-5 text-white rounded-lg ">
-                  {subcategory.category_name}
-                </h1>
-                <ProductByCategory category={subcategory._id} />
-              </>
-            );
-          })}
-          </>
+            </>
         }
 
         {/* {subcategories === "All" && subcategories.length > 0 && (
@@ -122,7 +122,7 @@ const Index = (props) => {
                   </div>
                 </>
               })} */}
-              {/* {categories.map((category) => {
+        {/* {categories.map((category) => {
                   return (
                     <>
                       <div className="">
@@ -135,7 +135,7 @@ const Index = (props) => {
                   );
                   })
                 } */}
-          {/* </div>
+        {/* </div>
         )} */}
         {/* {subcategories != "All" &&
           subcategories.length > 0 &&
