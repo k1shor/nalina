@@ -17,6 +17,7 @@ const Index = (props) => {
   // const [productsBasedOnCategory, setProductsBasedOnCategory] = useState([]);
   let [reset, setReset] = useState(false);
   let [btnbg, setBtnBg] = useState('')
+  let [title, setTitle] = useState('')
 
 
   useEffect(() => {
@@ -36,15 +37,17 @@ const Index = (props) => {
   //   setSubCategories("All");
   // };
 
-  const handleClick = (id) => {
-    if (id === "all") {
+  const handleClick = (e) => {
+    if (e.target.id === "all") {
       setReset(true)
       setSubCategories("All")
       setBtnBg('all')
+      setTitle('')
     }
     else {
-      getSubCategories(id).then((data) => setSubCategories(data));
-      setBtnBg(id)
+      getSubCategories(e.target.id).then((data) => setSubCategories(data));
+      setBtnBg(e.target.id)
+      setTitle(e.target.name)
     }
   };
 
@@ -67,17 +70,19 @@ const Index = (props) => {
           </p>
         </div>
         <div className="w-full md:w-3/4 lg:w-[1200px] m-auto flex flex-col md:flex-row mt-14 justify-center items-center gap-3 px-4 flex-wrap">
-          <button
+          <button key={'all'} id='all'
             className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg === 'all' || btnbg === '' ? 'bg-ksb text-white' : 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
-            onClick={() => handleClick("all")}
+            onClick={handleClick}
           >
             ALL
           </button>
           {categories.map((category) => (
             <button
               key={category._id}
+              id={category._id}
+              name = {category.category_name}
               className={`block py-1 px-3 md:px-5 md:border-solid md:border-[1px] rounded-lg md:border-gray-700 ${btnbg === category._id ? 'bg-ksb text-white' : 'text-gray-700 bg-white md:bg-transparent md:text-gray-700 dark:text-white md:dark:text-blue-500 hover:md:bg-ksb hover:md:text-white hover:duration-200'}`}
-              onClick={() => handleClick(category._id)}
+              onClick={handleClick}
             >
               {category.category_name}
             </button>
@@ -87,9 +92,9 @@ const Index = (props) => {
           subcategories === "All" ?
             <>
               <div className="w-full md:w-3/4 lg:w-11/12 m-auto flex flex-col md:flex-row md:gap-11 gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
+              <h1 className="text-lg mt-3 md:text-2xl font-bold text-center bg-ksb px-4 py-2  w-full mx-auto rounded-lg underline text-white">Recently Added</h1>
                 {products.map((product) => {
                   return <>
-                    <h1 className="text-sm mt-3 md:text-md font-semibold text-center text-ksb  w-full mx-auto rounded-lg ">{product.category.category_name}</h1>
                     <Product key={product._id} product={product} FRONTEND_URL={props.FRONTEND_URL} />
                   </>
                 })}
@@ -98,16 +103,23 @@ const Index = (props) => {
             :
             <>
               <div className="w-full md:w-3/4 lg:w-11/12 m-auto flex flex-col md:flex-row md:gap-11 gap-4 mb-12 mt-10 justify-center items-center md:flex-wrap px-4">
-              {subcategories.map((subcategory) => {
-                return (
-                  <>
-                    <Link href={`/products/${subcategory._id}`}><h1 className="text-sm mt-3 md:text-md font-semibold text-center text-ksb  w-full mx-auto rounded-lg ">
-                      {subcategory.category_name}
-                    </h1></Link>
-                    <ProductByCategory category={subcategory._id} />
-                  </>
-                );
-              })}
+            
+            <h1 className="text-lg mt-3 md:text-2xl font-bold text-center bg-ksb px-4 py-2  w-full mx-auto rounded-lg underline text-white">{title}</h1>
+              <div className="w-full md:w-3/4 lg:w-11/12 m-auto flex flex-col md:gap-11 gap-4 mb-12 justify-center items-center md:flex-wrap px-4">
+                {subcategories.map((subcategory) => {
+                  return (
+                    <>
+                      <h1 className="text-lg md:text-xl font-bold text-center text-ksb  w-full mx-auto rounded-lg underline ">
+                        {subcategory.category_name}
+                      </h1>
+                      <ProductByCategory category={subcategory._id} />
+                      <Link href={`/products/${subcategory._id}`} className="mb-3 underline text-ksb font-bold" title={subcategory.category_name}>See More...</Link>
+                      <hr className="w-full border-ksb mx-auto "/>
+
+                    </>
+                  );
+                })}
+              </div>
               </div>
             </>
         }
